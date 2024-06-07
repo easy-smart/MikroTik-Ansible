@@ -1,0 +1,43 @@
+# Use alpinelinux/ansible
+FROM alpinelinux/ansible
+
+VOLUME [ /sys/fs/cgroup ]
+WORKDIR /ansible
+EXPOSE 22
+
+RUN apk upgrade
+
+RUN mkdir -p /root/.ssh \
+  && chmod 0700 /root/.ssh \
+  && passwd -u root \
+  && echo "$ssh_pub_key" > /root/.ssh/authorized_keys \
+  && apk add --no-cache openrc openssh \
+  && ssh-keygen -A \
+  && echo -e "PasswordAuthentication no" >> /etc/ssh/sshd_config \
+  && mkdir -p /run/openrc \
+  && touch /run/openrc/softlevel
+
+RUN apk add --no-cache py3-setuptools
+RUN pip3 install --upgrade pip
+#RUN pip3 install cryptography
+#RUN pip3 install --user ansible-pylibssh
+#RUN pip3 install --no-pep517 ansible-pylibssh
+#RUN pip3 install --only-binary=:all: --platform=manylinux_2_24_x86_64 --target /usr/lib/python3.8/site-packages ansible-pylibssh
+
+ENV ANSIBLE_GATHERING smart
+ENV ANSIBLE_HOST_KEY_CHECKING false
+ENV ANSIBLE_RETRY_FILES_ENABLED false
+ENV ANSIBLE_ROLES_PATH /ansible/roles
+ENV ANSIBLE_SSH_PIPELINING True
+
+RUN ansible-galaxy collection install ansible.netcommon
+RUN ansible-galaxy collection install community.routeros
+
+COPY rootfs /
+#RUN yarn
+#RUN yarn build
+
+ENTRYPOINT ["sh", "-c", "rc-status; rc-service sshd start; sh"]
+
+
+
