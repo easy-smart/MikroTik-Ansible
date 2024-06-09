@@ -1,0 +1,5 @@
+---
+- name: Disable MikroTik cloud
+  community.routeros.api:
+    path: ip cloud
+    cmd: set update-time=no ddns-enabled=no ddns-update-interval=5m

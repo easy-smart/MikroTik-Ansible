@@ -1,0 +1,27 @@
+---
+- name: Disable ftp service
+  community.routeros.api:
+    path: ip service
+    update: .id=ftp disabled=yes
+
+- name: Disable telnet service
+  community.routeros.api:
+    path: ip service
+    update: .id=telnet disabled=yes
+
+- name: Disable www service
+  community.routeros.api:
+    path: ip service
+    update: .id=www disabled=yes
+
+- name: Disable api service
+  community.routeros.api:
+    path: ip service
+    update: .id=api disabled=yes
+
+#- name: Disable api-ssl service
+#  community.routeros.api:
+#    path: ip service
+#    update: .id=api-ssl disabled=yes
+
+

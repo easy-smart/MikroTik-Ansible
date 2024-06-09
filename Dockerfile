@@ -4,7 +4,7 @@ VOLUME [ "/sys/fs/cgroup" ]
 WORKDIR /ansible
 EXPOSE 22
 
-RUN python3 -m pip install ansible paramiko
+RUN python3 -m pip install ansible paramiko librouteros scp
 RUN apk update && apk upgrade
 
 RUN mkdir -p /root/.ssh \

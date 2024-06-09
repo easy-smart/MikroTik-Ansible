@@ -1,0 +1,5 @@
+---
+- name: Enable silent boot
+  community.routeros.api:
+    path: system routerboard settings
+    cmd: set silent-boot=yes

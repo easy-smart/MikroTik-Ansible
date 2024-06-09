@@ -1,0 +1,34 @@
+---
+- name: Get first mac address
+  community.routeros.api:
+    path: interface ethernet
+    extended_query:
+      attributes:
+        - mac-address
+        - default-name
+        - .id
+      where:
+        - attribute: "default-name"
+          is: "=="
+          value: "ether1"
+  register: first_mac
+
+
+- name: Set hostname
+  vars:
+    mac: "{{(first_mac.msg[0]['mac-address'] | split(':') | join }}"
+    hostname: "{{ ['ezSw', (first_mac.msg[0]['mac-address'] | split(':') | join)[6:]] | join('-') }}"
+  community.routeros.api:
+    path: system identity
+    cmd: set name={{hostname}}
+
+
+
+
+#- name: Set hostname
+#  vars:
+#    mac: "{{(first_mac.msg[0]['mac-address'] | split(':') | join }}"
+#    hostname: "{{ ['ezSw', (first_mac.msg[0]['mac-address'] | split(':') | join)[6:]] | join('-') }}"
+#  community.routeros.command:
+#    commands:
+#      - /system identity set name={{hostname}}

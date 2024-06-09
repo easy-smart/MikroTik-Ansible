@@ -1,0 +1,5 @@
+---
+- name: Configure dns
+  community.routeros.api:
+    path: ip dns
+    cmd: set allow-remote-requests=no

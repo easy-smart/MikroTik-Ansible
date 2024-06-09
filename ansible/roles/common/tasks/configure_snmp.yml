@@ -1,0 +1,20 @@
+---
+- name: Configure snmp contact
+  community.routeros.api:
+    path: snmp
+    cmd: set contact="helpdesk@easy-smart.ch"
+
+- name: Configure snmp location
+  community.routeros.api:
+    path: snmp
+    cmd: set location=""
+
+- name: Configure snmp engine-id
+  community.routeros.api:
+    path: snmp
+    cmd: set engine-id=""
+
+- name: Enable snmp
+  community.routeros.api:
+    path: snmp
+    cmd: set enabled=yes

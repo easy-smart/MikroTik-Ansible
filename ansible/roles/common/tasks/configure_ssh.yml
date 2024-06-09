@@ -1,0 +1,32 @@
+---
+- name: Configure SSH
+  community.routeros.api:
+    path: ip ssh
+    cmd: set strong-crypto=yes forwarding-enabled=both
+
+- name: Check for key
+  community.routeros.api:
+    path: user ssh-keys
+#    query: .id user WHERE user == "admin"
+    extended_query:
+      attributes:
+        - user
+        - .id
+      where:
+        - attribute: user
+          is: "=="
+          value: "admin"
+  register: ssh_key_admin
+
+#- name: debug
+#  debug:
+#    msg: "{{ ssh_key_admin }}"
+
+- block:
+    - debug:
+        msg: "No key loaded"
+    - name: Configure SSH key
+      community.routeros.api:
+        path: user ssh-keys
+        add: user="admin" key="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAiHjTicrug1g1telK6oNu/LfGeFEyL+TGvp8exV0yjRFGXSd38xMApl1DeDqEVA2pmfcKiNyUbdxrhKYaQ3Cupm5XogM6RcDMq3j7UHV6qGzQn/eBDdW2/KC9j8VzP7sjS3AM0PdRhk/wsaXgZgXSlvswFrll1kE/w+buDXDJ5alh1ByaqJCRBHUFl70KjcMK3mNLcMvkFCWrl4RnuzJugFaHtsRZSwC9BahY10GbEJOdPJXrUu9/dAl6/a51DlNqxoVNOhlDUZW+CI/My0iXCytLOzZl6JHS3kOwWnrXr25vlNJy9ZktNORz8r6f0oeWpSG90ET0bDyUa5gkTpw7vQ== roland.rusch@easy-smart.ch (2021-05-07)"
+  when: ssh_key_admin.msg | length == 0

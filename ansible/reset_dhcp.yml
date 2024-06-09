@@ -1,0 +1,15 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    hostname: 192.168.88.1
+    username: admin
+    password: IMRIA9QRHE
+  module_defaults:
+    group/community.routeros.api:
+      hostname: "{{ inventory_hostname }}"
+      password: "{{ password }}"
+      username: "{{ username }}"
+
+  roles:
+    - reset_dhcp

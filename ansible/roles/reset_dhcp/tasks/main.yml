@@ -1,0 +1,11 @@
+---
+- name: Upload run-after-reset script
+  ansible.netcommon.net_put:
+    src: reset_dhcp.rsc
+    dest: flash/run-after-reset.rsc
+
+- name: Reset configuration
+  community.routeros.api:
+    path: system
+    cmd: reset-configuration skip-backup=yes run-after-reset=flash/run-after-reset.rsc
+

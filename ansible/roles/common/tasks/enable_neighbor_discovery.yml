@@ -1,0 +1,5 @@
+---
+- name: Enable neighbor discovery
+  community.routeros.api:
+    path: ip neighbor discovery-settings
+    cmd: set discover-interface-list=all

@@ -1,0 +1,5 @@
+---
+- name: Enable NTP client
+  community.routeros.api:
+    path: system ntp client
+    cmd: set enabled=yes

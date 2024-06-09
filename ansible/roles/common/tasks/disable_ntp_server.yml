@@ -1,0 +1,5 @@
+---
+- name: Disable NTP server
+  community.routeros.api:
+    path: system ntp server
+    cmd: set enabled=no

@@ -1,0 +1,5 @@
+---
+- name: Set time zone
+  community.routeros.api:
+    path: system clock
+    cmd: set time-zone-autodetect=no time-zone-name="Europe/Zurich"

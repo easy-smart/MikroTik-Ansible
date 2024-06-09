@@ -1,0 +1,18 @@
+---
+# sets the identity
+
+# :local firstMac [/interface ethernet get [/interface ethernet find default-name=ether1] mac-address]
+
+- import_tasks: set_hostname.yml
+- import_tasks: set_time_zone.yml
+- import_tasks: configure_dns.yml
+- import_tasks: enable_ntp_client.yml
+- import_tasks: disable_ntp_server.yml
+- import_tasks: disable_services.yml
+- import_tasks: configure_ssh.yml
+- import_tasks: configure_snmp.yml
+- import_tasks: disable_mikrotik_cloud.yml
+- import_tasks: enable_neighbor_discovery.yml
+- import_tasks: enable_silent_boot.yml
+- import_tasks: enable_romon.yml
+

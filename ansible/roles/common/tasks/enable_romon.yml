@@ -1,0 +1,5 @@
+---
+- name: Enable romon
+  community.routeros.api:
+    path: tool romon
+    cmd: set enabled=yes

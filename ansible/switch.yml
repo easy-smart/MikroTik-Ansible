@@ -1,0 +1,16 @@
+---
+- name: RouterOS switch configuration
+  hosts: routers
+  remote_user: admin
+  gather_facts: false
+  module_defaults:
+    group/community.routeros.api:
+      tls: true
+      validate_cert_hostname: false
+      validate_certs: false
+      force_no_cert: true
+      hostname: "{{ inventory_hostname }}"
+      password: "{{ ansible_password }}"
+      username: "{{ ansible_user }}"
+  roles:
+    - common
